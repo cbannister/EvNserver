@@ -189,9 +189,13 @@ evnApp.controller('EditDestCtrl', function EditDestCtrl(
         // Update the event if we have a detailId
         if (detailId) {
             $http.post('/adminApi/updateDest',
-                {'dest': $scope.dest});
-            $scope.uploadDestImages(detailId);
-            $scope.$parent.getDestinations('name', 'ASC');
+                {'dest': $scope.dest})
+                .then(function(response) {
+                    $scope.uploadDestImages(detailId);
+                    $scope.$parent.getDestinations('name', 'ASC');
+                }).catch(function(reason) {
+                console.log(reason);
+            });
         } else {
             // Add a new event
             $http.post('/adminApi/addDest',

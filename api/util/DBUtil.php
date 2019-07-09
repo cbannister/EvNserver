@@ -54,6 +54,7 @@ class DBUtil {
             . 'VALUES (:name, :shortDesc, :longDesc, :imageURL, :thumbURL, :phone, :website, :cost, :email)';
         $stmt = $db->prepare($query);
 
+        $email = !empty($detail['email']) ? $detail['email'] : '';
         // Bind the Parameters
         $stmt->bindParam(':name', $detail['name'], \PDO::PARAM_STR);
         $stmt->bindParam(':shortDesc', $detail['shortDesc'], \PDO::PARAM_STR);
@@ -63,7 +64,7 @@ class DBUtil {
         $stmt->bindParam(':phone', $detail['phone'], \PDO::PARAM_STR);
         $stmt->bindParam(':website', $detail['website'], \PDO::PARAM_STR);
         $stmt->bindParam(':cost', $detail['cost'], \PDO::PARAM_INT);
-        $stmt->bindParam(':email', $detail['email'], \PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
         $stmt->execute();
 
         $detailId = $db->getLastInsertId();
